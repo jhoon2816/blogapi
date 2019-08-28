@@ -52,7 +52,7 @@ app.post('/post/:id',(req,res)=>{
     let content = req.body.content;
     let author = req.body.author;
 
-    let sql = 'insert into post {title,content,author) values(?,?,?)';
+    let sql = 'insert into posts {title,content,author) values(?,?,?)';
     let params = [title, content, author];
 
     db.query(sql,params,(err,result,fields)=>{
@@ -69,7 +69,7 @@ app.get(['/post/:id/edit'],(req,res)=>{
     db.query(sql,(err,posts,fields)=>{
         let id = req.params.id;
         if(id){
-            let sql = 'select * from post where id=?';
+            let sql = 'select * from posts where id=?';
             db.query(sql,[id],(err, result, fields)=>{
                 if(err){
                     console.log(err);
@@ -85,7 +85,7 @@ app.get(['/post/:id/edit'],(req,res)=>{
 });
 
 app.post('/post/:id/edit',(req,res)=>{
-    let sql = 'update post set title=?, content=?, author=? where id=?';
+    let sql = 'update posts set title=?, content=?, author=? where id=?';
     let title = req.body.title;
     let content = req.body.content;
     let author = req.body.author;
@@ -100,10 +100,10 @@ app.post('/post/:id/edit',(req,res)=>{
 });
 
 app.get('/post/:id/delete',(req,res)=>{
-    let sql = 'select id, title from post';
+    let sql = 'select id, title from posts';
     let id = req.params.id;
     db.query(sql,(err, posts, fields)=>{
-        let sql = 'select * from post where id=?';
+        let sql = 'select * from posts where id=?';
         db.query(sql, [id], (err, post)=>{
             if(err){
                 console.log(err);          
@@ -120,7 +120,7 @@ app.get('/post/:id/delete',(req,res)=>{
 
 app.post('/post/:id/delete',(req,res)=>{
     let title = req.params.title;
-    let sql = 'delete from post where id=?';
+    let sql = 'delete from posts where id=?';
     db.query(sql,[id],(err,result)=>{
         if(err) console.log(err);
         res.redirect('/post');
@@ -128,11 +128,11 @@ app.post('/post/:id/delete',(req,res)=>{
 });
 
 app.get(['/post','/post/:id'],(req,res)=>{
-    let sql = 'select id, title from post';
+    let sql = 'select id, title from posts';
     db.query(sql, (err,posts, fields)=>{
         let id = req.params.id;
         if(id){
-            let sql = 'select * from post where id=?';
+            let sql = 'select * from posts where id=?';
             db.query(sql,[id],(err,post, fields)=>{
                 if(err){
                     console.log(err);
