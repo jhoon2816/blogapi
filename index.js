@@ -60,7 +60,7 @@ app.post('/post/:id',(req,res)=>{
           console.log('error');
         }
     });
-    console.log('the file has been saved!');
+    console.log('file has been saved!');
     res.redirect('/post/'+result.insertId);
 });
 
@@ -74,7 +74,7 @@ app.get(['/post/:id/edit'],(req,res)=>{
                 if(err){
                     console.log(err);
                 } else {
-                    res.send({posts: posts, post: post[0]});
+                    res.json({posts: posts, post: post[0]});
                 }
             });
         } else {
@@ -124,25 +124,6 @@ app.post('/post/:id/delete',(req,res)=>{
     db.query(sql,[id],(err,result)=>{
         if(err) console.log(err);
         res.redirect('/post');
-    });
-});
-
-app.get(['/post','/post/:id'],(req,res)=>{
-    let sql = 'select id, title from posts';
-    db.query(sql, (err,posts, fields)=>{
-        let id = req.params.id;
-        if(id){
-            let sql = 'select * from posts where id=?';
-            db.query(sql,[id],(err,post, fields)=>{
-                if(err){
-                    console.log(err);
-                } else {
-                    res.json({posts: posts, post : post[0] });
-                }
-            });
-        } else {
-            res.json( {posts: posts, post: undefined });
-        }
     });
 });
 
